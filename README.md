@@ -8,3 +8,4 @@ Potfolio Image dimention (px)
 3rd tile   -  568 × 488 each
 4th banner -  1146 × 550
 Thumnail   -  568 × 488
+hii amar
