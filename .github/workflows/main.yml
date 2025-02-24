@@ -9,9 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Disable host key checking and deploy
-        run: |
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-          cybersenda@95.216.217.3 \
-          "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
+   - name: Deploy via SSH
+  run: |
+    sudo apt-get install -y sshpass
+    sshpass -p "x2V$1n@9Tx2@" ssh -o StrictHostKeyChecking=no \
+    cybersenda@95.216.217.3 \
+    "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
+
