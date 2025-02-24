@@ -1,9 +1,11 @@
-name: Deploy to Server
-
 on:
   push:
     branches:
-      - main  # Change this if your deployment branch is different
+      - master
+  pull_request:
+    branches:
+      - master
+
 
 jobs:
   deploy:
