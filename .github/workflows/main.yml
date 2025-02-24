@@ -16,7 +16,7 @@ jobs:
       - name: Deploy to Server
         env:
           SSH_USER: cybersenda
-          SSH_PASS: x2V$1n@9Tx2@
+          SSH_PASS: X2v1N9tX2Z!
           SSH_HOST: 95.216.217.3
           SSH_PORT: 22
           DEPLOY_PATH: /home/cybersenda/cybersenda.com/public
