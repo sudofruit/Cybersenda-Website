@@ -10,18 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Add SSH Key and Disable Host Key Checking
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
     - name: Deploy via SSH
       run: |
-        ssh $SERVER_USER@$SERVER_IP "cd /home/***/***.com/public && git pull origin master"
+        ssh $SERVER_USER@$SERVER_IP "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
       env:
         SERVER_USER: ${{ secrets.SERVER_USER }}
         SERVER_IP: ${{ secrets.SERVER_IP }}
