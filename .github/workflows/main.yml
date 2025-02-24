@@ -12,5 +12,5 @@ jobs:
     steps:
       - name: Deploy via SSH
         run: |
-          ssh -o StrictHostKeyChecking=no cybersenda@95.216.217.3 \
+          ssh cybersenda@95.216.217.3 \
           "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
