@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy via SSH
+      - name: Disable host key checking and deploy
         run: |
-          ssh cybersenda@95.216.217.3 \
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          cybersenda@95.216.217.3 \
           "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
