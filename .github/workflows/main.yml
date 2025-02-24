@@ -1,27 +1,30 @@
-name: Deploy Static HTML
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - main
+      - main  # Runs only when code is pushed to the 'main' branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install SSH Client and sshpass
-        run: sudo apt-get install -y openssh-client sshpass
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Deploy to Server
-        env:
-          SSH_USER: cybersenda
-          SSH_PASS: X2v1N9tX2Z!
-          SSH_HOST: 95.216.217.3
-          SSH_PORT: 22
-          DEPLOY_PATH: /home/cybersenda/cybersenda.com/public
+      - name: Set up SSH Key
         run: |
-          SSHPASS='$SSH_PASS' sshpass -e ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << EOF
-            cd $DEPLOY_PATH
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Connect to Server and Deploy
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            cd /home/${{ secrets.SERVER_USER }}/cybersenda.com/public
             git pull origin main
             exit
+          EOF
