@@ -10,18 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install SSH Client and sshpass
-        run: sudo apt-get install -y openssh-client sshpass
+      - name: Install SSH Client
+        run: sudo apt-get install -y openssh-client
+
+      - name: Set up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 95.216.217.3 >> ~/.ssh/known_hosts
 
       - name: Deploy to Server
         env:
           SSH_USER: cybersenda
-          SSH_PASS: X2v1N9tX2Z!
           SSH_HOST: 95.216.217.3
           SSH_PORT: 22
           DEPLOY_PATH: /home/cybersenda/cybersenda.com/public
         run: |
-          SSHPASS='$SSH_PASS' sshpass -e ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << EOF
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << EOF
             cd $DEPLOY_PATH
             git pull origin main
             exit
