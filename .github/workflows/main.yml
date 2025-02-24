@@ -10,11 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install sshpass
-        run: sudo apt-get update && sudo apt-get install -y sshpass
-
-      - name: Deploy via SSH using password
+      - name: Deploy via SSH
         run: |
-          sshpass -p "x2V$1n@9Tx2@" ssh -o StrictHostKeyChecking=no \
-          cybersenda@95.216.217.3 -p 22 \
+          ssh -o StrictHostKeyChecking=no cybersenda@95.216.217.3 \
           "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
