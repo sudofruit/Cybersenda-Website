@@ -25,7 +25,7 @@ jobs:
           SSH_USER: cybersenda
           SSH_HOST: 95.216.217.3
           SSH_PORT: 22
-          DEPLOY_PATH: /home/cybersenda/cybersenda.com/public
+          DEPLOY_PATH: /home/cybersenda/cybersenda.com/Cybersenda-Website
         run: |
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << EOF
             cd $DEPLOY_PATH
