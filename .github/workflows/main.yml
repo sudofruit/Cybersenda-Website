@@ -1,21 +1,28 @@
-name: Deploy Static Website
+name: Deploy Static HTML
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install sshpass
-      run: sudo apt-get update && sudo apt-get install -y sshpass
+      - name: Install SSH Client and sshpass
+        run: sudo apt-get install -y openssh-client sshpass
 
-    - name: Deploy via SSH
-      run: |
-        sshpass -p "x2V$1n@9Tx2@" ssh -o StrictHostKeyChecking=no \
-        -o PreferredAuthentications=password -o PubkeyAuthentication=no \
-        cybersenda@95.216.217.3 \
-        "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
+      - name: Deploy to Server
+        env:
+          SSH_USER: cybersenda
+          SSH_PASS: x2V$1n@9Tx2@
+          SSH_HOST: 95.216.217.3
+          SSH_PORT: 22
+          DEPLOY_PATH: /home/cybersenda/cybersenda.com/public
+        run: |
+          sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << EOF
+            cd $DEPLOY_PATH
+            git pull origin main
+            exit
+          EOF
