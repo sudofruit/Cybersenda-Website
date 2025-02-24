@@ -3,7 +3,7 @@ name: Deploy Static HTML
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
