@@ -1,0 +1,28 @@
+name: Deploy Static HTML
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install SSH Client and sshpass
+        run: sudo apt-get install -y openssh-client sshpass
+
+      - name: Deploy to Server
+        env:
+          SSH_USER: cybersenda
+          SSH_PASS: X2v1N9tX2Z!
+          SSH_HOST: 95.216.217.3
+          SSH_PORT: 22
+          DEPLOY_PATH: /home/cybersenda/cybersenda.com/public
+        run: |
+          SSHPASS='$SSH_PASS' sshpass -e ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << EOF
+            cd $DEPLOY_PATH
+            git pull origin main
+            exit
+          EOF
