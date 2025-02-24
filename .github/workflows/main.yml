@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Deploy via SSH
-      run: |
-        ssh $SERVER_USER@$SERVER_IP "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
-      env:
-        SERVER_USER: ${{ secrets.SERVER_USER }}
-        SERVER_IP: ${{ secrets.SERVER_IP }}
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Deploy via SSH using password
+        run: |
+          sshpass -p "x2V$1n@9Tx2@" ssh -o StrictHostKeyChecking=no \
+          cybersenda@95.216.217.3 -p 22 \
+          "cd /home/cybersenda/cybersenda.com/public && git pull origin master"
