@@ -21,7 +21,7 @@ jobs:
           SSH_PORT: 22
           DEPLOY_PATH: /home/cybersenda/cybersenda.com/public
         run: |
-          sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << EOF
+          SSHPASS='$SSH_PASS' sshpass -e ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << EOF
             cd $DEPLOY_PATH
             git pull origin main
             exit
