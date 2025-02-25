@@ -1,29 +1,28 @@
-name: Deploy Static Website
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - master  # Change to your deployment branch if needed
+      - master  # Trigger deployment on push to the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    - name: Deploy to Server via SSH
-      uses: appleboy/ssh-action@v1.0.3
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
       with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          git config --global --add safe.directory /home/cybersenda/cybersenda.com/public
-          cd /home/cybersenda/cybersenda.com/public  # Navigate to deployment directory
-          git reset --hard  # Reset any local changes
-          git clean -fd  # Remove untracked files
-          git pull origin master  # Ensure 'master' is the correct branch
-          chmod -R 755 /home/cybersenda/cybersenda.com/public
-          echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S chown -R cybersenda:cybersenda /home/cybersenda/cybersenda.com/public
+        known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+        cd /home/cybersenda/cybersenda.com/public
+        git fetch origin master
+        git reset --hard origin/main
+        EOF
