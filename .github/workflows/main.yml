@@ -1,30 +1,26 @@
-name: Deploy to Server
+name: Deploy Static Website
 
 on:
   push:
     branches:
-      - main  # Runs only when code is pushed to the 'main' branch
+      - main  # Change to your deployment branch if needed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Set up SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-
-      - name: Connect to Server and Deploy
-        run: |
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
-          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            cd /home/${{ secrets.SERVER_USER }}/cybersenda.com/public
-            git pull origin main
-            exit
-          EOF
+    - name: Deploy to Server via SSH
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /home/cybersenda/cybersenda.com/public  # Change to your actual server directory
+          git pull origin main
+          chmod -R 755 /home/cybersenda/cybersenda.com/public
+          chown -R cybersenda:cybersenda /home/cybersenda/cybersenda.com/public
