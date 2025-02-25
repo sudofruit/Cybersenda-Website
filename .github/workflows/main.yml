@@ -3,7 +3,7 @@ name: Deploy Static Website
 on:
   push:
     branches:
-      - main  # Change to your deployment branch if needed
+      - master  # Change to your deployment branch if needed
 
 jobs:
   deploy:
