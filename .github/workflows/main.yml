@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           sudo git config --global --add safe.directory /home/cybersenda/cybersenda.com/public
-          cd /home/cybersenda/cybersenda.com/public  # Change to your actual server directory
-          git pull origin main
+          cd /home/cybersenda/cybersenda.com/public  # Navigate to deployment directory
+          git pull origin master  # Ensure 'master' is the correct branch
           chmod -R 755 /home/cybersenda/cybersenda.com/public
-          chown -R cybersenda:cybersenda /home/cybersenda/cybersenda.com/public
+          sudo chown -R cybersenda:cybersenda /home/cybersenda/cybersenda.com/public
