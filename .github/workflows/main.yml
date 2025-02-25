@@ -20,6 +20,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
+          sudo git config --global --add safe.directory /home/cybersenda/cybersenda.com/public
           cd /home/cybersenda/cybersenda.com/public  # Change to your actual server directory
           git pull origin main
           chmod -R 755 /home/cybersenda/cybersenda.com/public
