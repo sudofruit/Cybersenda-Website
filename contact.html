@@ -5,9 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>
-      Cybersenda | Marketing Advice, Good Ideas & Great Vibes—Let’s Talk!
-    </title>
+    <title>Cybersenda | Marketing Advice, Good Ideas —Let’s Talk!</title>
     <meta
       name="description"
       content="Got ideas? Questions? Big dreams? We’re all ears. Whether it's a quick chat or a deep dive into your brand’s future, Cybersenda is just a message away. Call, email, or drop by—we’re here to make things happen!"
@@ -31,6 +29,19 @@
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/css/aos.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <!-- Add this in <head> section before other scripts -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init({
+          publicKey: "AVCluaKY0arL9y9Ik", // Replace with your actual key
+        });
+      })();
+    </script>
   </head>
   <body>
     <main class="main-aboutpage">
@@ -142,7 +153,7 @@
                 <img src="./assets/images/bg1.png" alt="BG" class="bg-img" />
                 <img src="./assets/images/icon3.png" alt="Icon" />
                 <h1>Let’s work <span>together.</span></h1>
-                <form method="POST" action="mailer.php">
+                <form id="contact-form">
                   <div
                     class="alert alert-success messenger-box-contact__msg"
                     style="display: none"
@@ -150,11 +161,20 @@
                   >
                     Your message was sent successfully.
                   </div>
+
+                  <!-- Error Message (Add this) -->
+                  <div
+                    class="alert alert-danger error-box-contact__msg"
+                    style="display: none"
+                    role="alert"
+                  >
+                    Failed to send your message. Please try again.
+                  </div>
                   <div class="input-group">
                     <input
                       type="text"
-                      name="full-name"
-                      id="full-name"
+                      name="name"
+                      id="name"
                       placeholder="Name *"
                     />
                   </div>
@@ -169,7 +189,7 @@
                   <div class="input-group">
                     <input
                       type="text"
-                      name="subject"
+                      name="title"
                       id="subject"
                       placeholder="Your Subject *"
                     />
@@ -182,11 +202,7 @@
                     ></textarea>
                   </div>
                   <div class="input-group">
-                    <button
-                      class="theme-btn submit-btn"
-                      name="submit"
-                      type="submit"
-                    >
+                    <button class="theme-btn submit-btn" type="submit">
                       Send Message
                     </button>
                   </div>
@@ -222,6 +238,7 @@
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/aos.js"></script>
     <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/ajax-form.js"></script>
+
+    <script src="./assets/js/email.js"></script>
   </body>
 </html>
