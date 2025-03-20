@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     errorMsg.style.display = "none";
 
     emailjs
-      .sendForm("service_n15xi3x", "template_kuw07xd", this)
+      .sendForm("service_62865rn", "template_4t9dyfp", this)
       .then(() => {
         successMsg.style.display = "block";
         contactForm.reset();
