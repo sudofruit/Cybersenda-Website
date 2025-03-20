@@ -2184,6 +2184,20 @@ ol {
   }
 }
 
+.box {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensures it stretches */
+}
+
+.about-edc-exp {
+  min-height: 100%; /* Forces it to take up the full height */
+  
+}
+
+
+
+
 
 
 
