@@ -2202,3 +2202,17 @@ ol {
 .about-edc-exp {
   min-height: 100%; /* Forces it to take up the full height */
 }
+.project-details-img,
+.project-details-2-img {
+  max-width: 100%;
+  height: auto !important;
+}
+
+.project-details-img img {
+  border-radius: 10px !important;
+}
+
+.project-details-2-img img,
+.project-details-2-img * {
+  border-radius: 5px !important;
+}
