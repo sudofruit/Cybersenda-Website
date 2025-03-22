@@ -113,10 +113,11 @@
             </div>
 
             <!-- Play cat sound  -->
-            <audio id="cat-sound">
-              <source src="/assets/images/audio/cat.wav" type="audio/mp3" />
-              Your browser does not support the audio element.
-            </audio>
+            <audio
+              id="cat-sound-1"
+              src="/assets/images/audio/cat-1.wav"
+            ></audio>
+
             <!-- Play cat sound  -->
             <div class="col-md-6 mb-3 mb-md-0" data-aos="zoom-in">
               <div class="box">
@@ -236,11 +237,17 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         let catDiv = document.getElementById("cat-animation");
-        let catSound = document.getElementById("cat-sound");
+        let catSound = document.getElementById("cat-sound-1");
 
         catDiv.addEventListener("click", function () {
           catSound.currentTime = 0; // Restart sound if already playing
           catSound.play();
+
+          // Apply shake effect
+          catDiv.classList.add("shake");
+          setTimeout(() => {
+            catDiv.classList.remove("shake");
+          }, 300);
         });
       });
     </script>
